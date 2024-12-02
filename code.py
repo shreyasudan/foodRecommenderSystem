@@ -19,16 +19,9 @@ def readFiles(file):
     file_path = os.path.join('data', file)
     return pd.read_csv(file_path, compression='gzip')
 
-trainData = readFiles('interactions_train.csv.gz')
-validData = readFiles('interactions_validation.csv.gz')
-testData = readFiles('interactions_test.csv.gz')
 recipes = readFiles('RAW_recipes.csv.gz')
 interactions = readFiles('RAW_interactions.csv.gz')
 # -
-
-trainData.head()
-
-print(trainData.head().to_markdown(index=False))
 
 recipes.head()
 
