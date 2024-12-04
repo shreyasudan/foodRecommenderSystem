@@ -104,15 +104,24 @@ While most ratings are concentrated around the 4-5 range, there are instances of
 
 ### Baselines for Comparison
 
-We will compare our model's performance against a Jaccard-similarity-based collaborative filtering approach. This model employs a collaborative filtering approach based on Jaccard similarity between sets of users who have interacted with recipes. For a user $u$ and a recipe $i$, the predicted rating is computed as:
+We will compare our model's performance against a Jaccard-similarity-based collaborative filtering approach. This model employs a collaborative filtering approach based on Jaccard similarity between sets of users who have interacted with recipes. 
 
-$$\hat{r}_{u,i} = \frac{\sum_{j \in R_u} \text{Jaccard}(U_i, U_j) \cdot r_{u,j}}{\sum_{j \in R_u} \text{Jaccard}(U_i, U_j)}$$
+For a user $u$ and a recipe $i$, the predicted rating is computed as:
 
-Where:
-- $R_u$: the set of recipes rated by users $u$
-- $U_i$: the set of users who have interacted with recipe $i$
-- $\text{Jaccard}(U_i, U_j)$ The Jaccard similarity between users who interacted with recipes $i$ and $j$
-- $r_{u,j}$: the rating given by user $u$ to recipe $j$
+$$J(u, v) = \frac{|I_u \cap I_v|}{|I_u \cup I_v|}$$
+Here the predicted rating $\hat{r}_{u, i}$ for user $u$ and recipe $i$ is defined such that:
+
+$$ \hat{r}_{u, i}=   \left\{
+\begin{array}{ll}
+      \frac{\sum_{v \in S(u, \Gamma)} r_{v, i}}{|S(u, \Gamma)|} & \text{if } |S(u, \Gamma)| > 0 \\
+      r_{global\_average} & \text{otherwise}\\
+\end{array} 
+\right.  $$
+
+where \
+$S(u, \Gamma) = \{v ∣ J(u,v) > \Gamma\}$ : Set of users similar to user $u$ with Jaccard similarity greater than the threshold $\Gamma$, \
+$r_{v, i}$ : Rating given by user $v$ to recipe $i$, \
+$r_{global\_average}$ : Global average rating, used as a fallback when no similar users are found.
 
 If no similar recipes are found then the global average rating is used instead.
 
