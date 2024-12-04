@@ -150,6 +150,7 @@ Ensure the model consistently outperforms baseline metrics like global average a
 Our model is a Stochastic Gradient Descent (SGD) based linear regression model that predicts ratings using a combination of global, user-specific, and item-specific biases. The prediction formula is:
 
 $$\hat{r}_{u, i} = w_0 + w_u + w_i$$
+
 Where \
 $\hat{r}_{u, i}$ : the predicted rating for recipe $i$ given by user $u$, \
 $w_0$ : Global bias term, \
