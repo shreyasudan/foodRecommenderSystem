@@ -107,7 +107,7 @@ While most ratings are concentrated around the 4-5 range, there are instances of
 
 We will compare our model's performance against a Jaccard-similarity-based collaborative filtering approach. This model employs a collaborative filtering approach based on Jaccard similarity between sets of users who have interacted with recipes. For a user $u$ and a recipe $i$, the predicted rating is computed as:
 
-$$\hat{r}_{u,i} = \frac{\sum_{j \in R_u} J(U_i, U_j) \cdot r_{u,j}}{\sum_{j \in R_u} J(U_i, U_j)}$$
+$$\hat{r}_{u,i} = \frac{\sum_{j \in R_u} \text{Jaccard}(U_i, U_j) \cdot r_{u,j}}{\sum_{j \in R_u} \text{Jaccard}(U_i, U_j)}$$
 
 Where:
 - $R_u$: the set of recipes rated by users $u$
