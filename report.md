@@ -104,19 +104,20 @@ While most ratings are concentrated around the 4-5 range, there are instances of
 
 ### Baselines for Comparison
 
-We will compare our model's performance against a Jaccard-similarity-based collaborative filtering approach. This model employs a collaborative filtering approach based on Jaccard similarity between sets of users who have interacted with recipes. 
+We will compare our model's performance against a Jaccard-similarity-based collaborative filtering approach. This model employs a collaborative filtering approach based on Jaccard similarity between sets of users who have interacted with recipes, where jaccard similarity is defined as: 
+
+$$J(i, j) = \frac{|U_i \cap U_j|}{|U_i \cup U_j|}$$
 
 For a user $u$ and a recipe $i$, the predicted rating is computed as:
 
-$$J(u, v) = \frac{|I_u \cap I_v|}{|I_u \cup I_v|}$$
-Here the predicted rating $\hat{r}_{u, i}$ for user $u$ and recipe $i$ is defined such that:
-
-$$ \hat{r}_{u, i}=   \left\{
-\begin{array}{ll}
+$$
+\hat{r}_{u, i}=   \left\{
+      \begin{array}{ll}
       \frac{\sum_{v \in S(u, \Gamma)} r_{v, i}}{|S(u, \Gamma)|} & \text{if } |S(u, \Gamma)| > 0 \\
       r_{global\_average} & \text{otherwise}\\
 \end{array} 
-\right.  $$
+\right.
+$$
 
 where \
 $S(u, \Gamma) = \{v ∣ J(u,v) > \Gamma\}$ : Set of users similar to user $u$ with Jaccard similarity greater than the threshold $\Gamma$, \
