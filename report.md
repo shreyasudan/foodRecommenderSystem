@@ -181,8 +181,6 @@ The third model we created was an item average rating model that predicted a use
 
 #### Model 4: Latent Factor Model
 The next model we created was a latent factor model that predicted a user's rating for a recipe using matrix factorization that decomposes the user-item interaction matrix $R$ into two-lower dimensional matrices. 
-
-Matrix factorization decomposes the user-item interaction matrix $R$ into two lower-dimensional matrices:
 > - $P$ : User latent factor matrix $(m \times k)$
 > - $Q$ : Item latent factor matrix $(n \times k)$
 
