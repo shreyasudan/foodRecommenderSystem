@@ -1,4 +1,3 @@
-<!-- #region -->
 # Assignment 2
 
 ---
@@ -145,11 +144,7 @@ Analyze residuals to identify patterns where the model underperforms, such as sp
 
 #### Baseline Comparison:
 Ensure the model consistently outperforms baseline metrics like global average and collaborative filtering.
-<!-- #endregion -->
 
-```python
-
-```
 ### Model Used: Stochastic Gradient Descent
 
 Our model is a Stochastic Gradient Descent (SGD) based linear regression model that predicts ratings using a combination of global, user-specific, and item-specific biases. The prediction formula is:
