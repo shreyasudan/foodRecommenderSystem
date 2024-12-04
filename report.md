@@ -180,7 +180,28 @@ The second model we created was an user average rating model that predicted a us
 The third model we created was an item average rating model that predicted a user's rating for a recipe based on the recipe's historical average ratings. If the recipe has no historical ratings, then the global average rating is used to predict the ratings. This model's strength is that it captures popular recipes. However, it fails to account for individual preferences of the user's and how it may impact the rating given for a particular recipe. This model however was not an improvement from the user average rating model with its RMSE value of 1.34657.
 
 #### Model 4: Latent Factor Model
-The next model we created was a latent factor model that predicted a user's rating for a recipe using matrix factorization that decomposes the user-item interaction matrix $R$ into two-lower dimensional matrices. With this model we an improvement from the user average rating model, since it gave us a RMSE value of 1.238847.
+The next model we created was a latent factor model that predicted a user's rating for a recipe using matrix factorization that decomposes the user-item interaction matrix $R$ into two-lower dimensional matrices. 
+
+Matrix factorization decomposes the user-item interaction matrix $R$ into two lower-dimensional matrices:
+> - $P$ : User latent factor matrix $(m \times k)$
+> - $Q$ : Item latent factor matrix $(n \times k)$
+
+The predicted rating is given by:
+$$\hat{r}_{u, i} = \mu + b_u + b_i + p_u^Tq_i$$
+Where \
+$\mu$ : the global average rating, \
+$b_u$ : User-specific bias, \
+$b_i$ : Recipe-specific bias, \
+$p_u$ : Latent factors for $u$, and \
+$q_i$ : : Latent factors for $i$
+
+The objective is to minimize the error:
+$$\mathcal{L} = \frac{1}{N} \sum_{(u, i)} (r_{u, i} - \hat{r}_{u, i})^2 + \lambda (b_u^2 + b_i^2 + ||p_u||^2 + ||q_i||^2)$$
+Where \
+${r}_{u, i}$ : the true rating
+$\lambda$ : regularization term to prevent overfitting.
+
+With this model we an improvement from the user average rating model, since it gave us a RMSE value of 1.238847.
 
 #### Model 5: Singluar Value Decomposition
 The last model we created before we making the Stochastistic Gradient Model was the Singluar Value Decomposition (SVD) model. This model decomposes the user-item interaction matrix into latent factors for users and items, which are then used to predict the ratings. We used the SVD model because it has the ability to capture complex user-item interactions effectively. However, this model's weakness is that it is computationally expensive and it is prone to overfitting when the hyperparameters are not carefully tuned. This model slightly improved our accuracy from the latent factor model with a RMSE value of 1.234234.
