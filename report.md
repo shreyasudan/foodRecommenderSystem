@@ -110,19 +110,10 @@ $$J(i, j) = \frac{|U_i \cap U_j|}{|U_i \cup U_j|}$$
 
 For a user $u$ and a recipe $i$, the predicted rating is computed as:
 
-$$
-\hat{r}_{u, i}=   \left\{
-      \begin{array}{ll}
-      \frac{\sum_{v \in S(u, \Gamma)} r_{v, i}}{|S(u, \Gamma)|} & \text{if } |S(u, \Gamma)| > 0 \\
-      r_{global\_average} & \text{otherwise}\\
-\end{array} 
-\right.
-$$
+$$\hat{r}_{u,i} = \frac{\sum_{j \in R_u} \text{Jaccard}(U_i, U_j) \cdot r_{u,j}}{\sum_{j \in R_u} \text{Jaccard}(U_i, U_j)}$$
 
 where \
-$S(u, \Gamma) = \{v ∣ J(u,v) > \Gamma\}$ : Set of users similar to user $u$ with Jaccard similarity greater than the threshold $\Gamma$, \
-$r_{v, i}$ : Rating given by user $v$ to recipe $i$, \
-$r_{global\_average}$ : Global average rating, used as a fallback when no similar users are found.
+$r_{u, j}$ : Rating given by user $u$ to recipe $j$, \
 
 If no similar recipes are found then the global average rating is used instead.
 
