@@ -172,8 +172,11 @@ We first created a baseline model that employs a collaborative filtering approac
 
 #### Model 1: Globel Average Rating
 
+We first created a baseline model that predicted the global average rating for all of the recipes, such that
 
-We first created a baseline model that predicted the global average rating for all of the recipes. This model gave us a starting RMSE of 1.26772. This model is good because it captures popular recipes and it requires minimal computational resources, making it efficient for large datasets liek this one. However, it does not account for individual user tastes of preferences, which lead to inaccurate predictions for users who deviate from the average.
+$$\hat{y} = \frac{1}{n} \sum_{i=1}^n y_i$$
+
+This model gave us a starting RMSE of 1.26772. This model is good because it captures popular recipes and it requires minimal computational resources, making it efficient for large datasets liek this one. However, it does not account for individual user tastes of preferences, which lead to inaccurate predictions for users who deviate from the average.
 
 #### Model 2: User Average Rating
 The second model we created was an user average rating model that predicted a user's rating for a recipe based on their historical average ratings. If the user has no historical rating, then the global average rating was used instead to predict the recipe's rating.
