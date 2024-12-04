@@ -171,13 +171,47 @@ While working on creating a model that can predict the rating, we did create a m
 We first created a baseline model that employs a collaborative filtering approach based on Jaccard similarity between sets of users who have interacted with recipes to predict rating. The Jaccard similarity is a straightforward measure that compares the overlap between two sets. It is easy to compute and understand, making it a practical choice for a baseline. However, a con for using this model is that it is computationally expensive. With our baseline model, we got a starting RMSE value of 1.38628. 
 
 #### Model 1: Globel Average Rating
+
+
 We first created a baseline model that predicted the global average rating for all of the recipes. This model gave us a starting RMSE of 1.26772. This model is good because it captures popular recipes and it requires minimal computational resources, making it efficient for large datasets liek this one. However, it does not account for individual user tastes of preferences, which lead to inaccurate predictions for users who deviate from the average.
 
 #### Model 2: User Average Rating
-The second model we created was an user average rating model that predicted a user's rating for a recipe based on their historical average ratings. If the user has no historical rating, then the global average rating was used instead to predict the recipe's rating. A strength for this model is that it personalizes the predictions. However, this model performs poorly for users with few or no ratings. This model had a slight improvement from the baseline as it gave is RMSE of 1.26212.
+The second model we created was an user average rating model that predicted a user's rating for a recipe based on their historical average ratings. If the user has no historical rating, then the global average rating was used instead to predict the recipe's rating.
+
+Here the predicted rating $\hat{r}_{u, i}$ for user $u$ and recipe $i$ is defined such that:
+
+$$ \hat{r}_{u, i}=   \left\{
+\begin{array}{ll}
+      \frac{\sum_{j \in I_u} r_{u, j}}{|I_u|} & \text{if } |I_u| > 0 \\
+      r_{global\_average} & \text{otherwise}\\
+\end{array} 
+\right.  $$
+
+where \
+$I_u$ : Set of recipes rated by user $u$, \
+$r_{u, j}$ : Rating given by user $u$ to recipe $j$, \
+$r_{global\_average}$ : Global average rating, used as a fallback when no similar users are found.
+
+A strength for this model is that it personalizes the predictions. However, this model performs poorly for users with few or no ratings. This model had a slight improvement from the baseline as it gave is RMSE of 1.26212.
 
 #### Model 3: Item Average Rating
-The third model we created was an item average rating model that predicted a user's rating for a recipe based on the recipe's historical average ratings. If the recipe has no historical ratings, then the global average rating is used to predict the ratings. This model's strength is that it captures popular recipes. However, it fails to account for individual preferences of the user's and how it may impact the rating given for a particular recipe. This model however was not an improvement from the user average rating model with its RMSE value of 1.34657.
+The third model we created was an item average rating model that predicted a user's rating for a recipe based on the recipe's historical average ratings. If the recipe has no historical ratings, then the global average rating is used to predict the ratings. 
+
+Here the predicted rating $\hat{r}_{u, i}$ for user $u$ and recipe $i$ is defined such that:
+
+$$ \hat{r}_{u, i} = \left\{
+\begin{array}{ll}
+      \frac{\sum_{v \in U_i} r_{v, i}}{|U_i|} & \text{if } |U_i| > 0 \\
+      r_{global\_average} & \text{otherwise}\\
+\end{array} 
+\right.  $$
+
+where \
+$U_i$ : Set of users who rated recipe $i$, \
+$r_{v, i}$ : Rating given by user $v$ to recipe $i$, \
+$r_{global\_average}$ : Global average rating, used as a fallback when no similar users are found.
+
+This model's strength is that it captures popular recipes. However, it fails to account for individual preferences of the user's and how it may impact the rating given for a particular recipe. This model however was not an improvement from the user average rating model with its RMSE value of 1.34657.
 
 #### Model 4: Latent Factor Model
 The next model we created was a latent factor model that predicted a user's rating for a recipe using matrix factorization that decomposes the user-item interaction matrix $R$ into two-lower dimensional matrices. 
@@ -185,18 +219,22 @@ The next model we created was a latent factor model that predicted a user's rati
 > - $Q$ : Item latent factor matrix $(n \times k)$
 
 The predicted rating is given by:
+
 $$\hat{r}_{u, i} = \mu + b_u + b_i + p_u^Tq_i$$
+
 Where \
 $\mu$ : the global average rating, \
 $b_u$ : User-specific bias, \
 $b_i$ : Recipe-specific bias, \
 $p_u$ : Latent factors for $u$, and \
-$q_i$ : : Latent factors for $i$
+$q_i$ : Latent factors for $i$
 
 The objective is to minimize the error:
+
 $$\mathcal{L} = \frac{1}{N} \sum_{(u, i)} (r_{u, i} - \hat{r}_{u, i})^2 + \lambda (b_u^2 + b_i^2 + ||p_u||^2 + ||q_i||^2)$$
+
 Where \
-${r}_{u, i}$ : the true rating
+${r}_{u, i}$ : the true rating, \
 $\lambda$ : regularization term to prevent overfitting.
 
 With this model we an improvement from the user average rating model, since it gave us a RMSE value of 1.238847.
